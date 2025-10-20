@@ -2,7 +2,7 @@
 
 Um jogo da cobrinha moderno e responsivo desenvolvido com HTML5, CSS3 e JavaScript puro, com múltiplos temas, sistema de áudio completo e recursos de acessibilidade.
 
-## 🎮 [**JOGAR AGORA**](https://seuusuario.github.io/snake-game-mz92)
+## 🎮 [**JOGAR AGORA**](https://tielmuzi.github.io/snake-game-mz92/)
 
 ![Snake Game Preview](https://img.shields.io/badge/Status-Online-brightgreen) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
@@ -81,13 +81,12 @@ O jogo rastreia automaticamente e atualiza em tempo real:
 ## 🚀 **Instalação e Uso**
 
 ### **Opção 1: Jogar Online**
-Acesse diretamente: [Snake Game MZ92](https://seuusuario.github.io/snake-game-mz92)
+Acesse diretamente: [Snake Game MZ92](https://tielmuzi.github.io/snake-game-mz92/)
 
 ### **Opção 2: Executar Localmente**
 ```bash
 # Clone o repositório
-git clone https://github.com/seuusuario/snake-game-mz92.git
-
+git clone https://github.com/tielmuzi/snake-game-mz92.git
 # Entre na pasta
 cd snake-game-mz92
 
@@ -182,15 +181,15 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 **Salatiel Muzi**
 - 🌐 Portfolio: [Em breve]
-- 📧 Email: [seu-email@exemplo.com]
-- 💼 LinkedIn: [Seu LinkedIn]
+- 📧 Email: [tielmuzimartins@gmail.com]
+- 💼 LinkedIn: [www.linkedin.com/in/salatiel-muzi-martins]
 
 ---
 
 ## 🎉 **Agradecimentos**
 
 - Inspirado no clássico jogo Snake
-- Músicas e efeitos sonoros de domínio público
+- Músicas e efeitos sonoros de domínio público e sem direitos autorais
 - Comunidade open source por ferramentas e inspiração
 
 ---
