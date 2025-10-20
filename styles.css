@@ -1,0 +1,833 @@
+/* Reset e Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    overflow: hidden;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+
+/* Variáveis CSS para Temas */
+:root {
+    /* Tema Claro (Padrão) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --accent-color: #667eea;
+    --snake-color: #4CAF50;
+    --food-color: #f44336;
+    --border-color: #e0e0e0;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --snake-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+    --food-shadow: 0 0 10px rgba(244, 67, 54, 0.3);
+}
+
+/* Tema Escuro */
+[data-theme="dark"] {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent-color: #64b5f6;
+    --snake-color: #51cf66;
+    --food-color: #64338d;
+    --border-color: #333333;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --snake-shadow: 0 0 15px rgba(81, 207, 102, 0.6);
+    --food-shadow: 0 0 15px rgba(100, 51, 141, 0.6);
+}
+
+/* Tema Neon */
+[data-theme="neon"] {
+    --bg-primary: #000000;
+    --bg-secondary: #111111;
+    --bg-gradient: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    --text-primary: #00ffff;
+    --text-secondary: #ff00ff;
+    --accent-color: #00ffff;
+    --snake-color: #00ffff;
+    --food-color: #ff00ff;
+    --border-color: #333333;
+    --shadow: 0 4px 20px rgba(0, 255, 255, 0.2);
+    --snake-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+    --food-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+}
+
+/* Alto Contraste */
+[data-accessibility="high-contrast"] {
+    --bg-primary: #000000;
+    --bg-secondary: #ffffff;
+    --text-primary: #ffffff;
+    --text-secondary: #000000;
+    --snake-color: #ffff00;
+    --food-color: #ff0000;
+    --border-color: #ffffff;
+}
+
+/* Telas Base */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-gradient);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+}
+
+.screen.overlay {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+/* Tela de Boas-Vindas */
+.welcome-content {
+    text-align: center;
+    color: white;
+    animation: fadeInUp 1s ease;
+}
+
+.logo h1 {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.logo-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+}
+
+.start-message {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+}
+
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.loading-dots span {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    animation: bounce 1.4s ease-in-out infinite both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+/* Menu Principal */
+.menu-content {
+    background: var(--bg-primary);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    min-width: 400px;
+    animation: slideInUp 0.5s ease;
+}
+
+.menu-header h2 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: var(--snake-shadow);
+}
+
+.menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.menu-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.menu-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1);
+}
+
+.btn-icon {
+    font-size: 1.5rem;
+}
+
+/* Configurações */
+.settings-content, .statistics-content, .credits-content {
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideInUp 0.5s ease;
+}
+
+.settings-header, .statistics-header, .credits-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.back-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    transform: translateX(-3px);
+    filter: brightness(1.1);
+}
+
+.settings-header h2, .statistics-header h2, .credits-header h2 {
+    color: var(--text-primary);
+    font-size: 2rem;
+}
+
+.settings-section {
+    margin-bottom: 2rem;
+}
+
+.settings-section h3 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+/* Botões de Dificuldade */
+.difficulty-buttons, .theme-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.difficulty-btn, .theme-btn {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.difficulty-btn:hover, .theme-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.difficulty-btn.active, .theme-btn.active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+/* Controle de Volume */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#volume-slider {
+    flex: 1;
+    height: 8px;
+    border-radius: 5px;
+    background: var(--bg-secondary);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    cursor: pointer;
+}
+
+#volume-value {
+    color: var(--text-primary);
+    font-weight: bold;
+    min-width: 50px;
+}
+
+/* Acessibilidade */
+.accessibility-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 24px;
+    height: 24px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+}
+
+/* Estatísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Créditos */
+.credits-info {
+    text-align: center;
+}
+
+.developer-card {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    border: 2px solid var(--border-color);
+}
+
+.developer-avatar {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.developer-card h3 {
+    color: var(--text-primary);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.developer-role {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.developer-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.tech-stack h4 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.tech-tag {
+    background: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* Tela do Jogo */
+.game-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-primary);
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    z-index: 20;
+}
+
+.game-info {
+    display: flex;
+    gap: 2rem;
+    color: var(--text-primary);
+}
+
+.game-info .label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.game-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.control-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-top: 120px;
+}
+
+#game-canvas {
+    border: 4px solid var(--border-color);
+    border-radius: 15px;
+    background: var(--bg-primary);
+    box-shadow: var(--shadow);
+}
+
+.instructions {
+    margin-top: 1rem;
+    text-align: center;
+    color: white;
+    opacity: 0.8;
+}
+
+.instructions p {
+    margin: 0.5rem 0;
+}
+
+/* Game Over */
+.game-over-content {
+    background: var(--bg-primary);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    min-width: 400px;
+    animation: slideInUp 0.5s ease;
+}
+
+.game-over-header h2 {
+    color: var(--text-primary);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+.final-stats {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    border: 2px solid var(--border-color);
+}
+
+.final-stats > div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+}
+
+.final-stats > div:last-child {
+    margin-bottom: 0;
+}
+
+.final-stats .label {
+    font-weight: bold;
+}
+
+.game-over-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.game-over-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.game-over-btn.primary {
+    background: var(--accent-color);
+    color: white;
+}
+
+.game-over-btn.secondary {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+}
+
+.game-over-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    filter: brightness(1.1);
+}
+
+/* Pausa */
+.pause-content {
+    background: var(--bg-primary);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    min-width: 350px;
+    animation: slideInUp 0.5s ease;
+}
+
+.pause-content h2 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.pause-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pause-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.pause-btn.primary {
+    background: var(--accent-color);
+    color: white;
+}
+
+.pause-btn.secondary {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+}
+
+.pause-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    filter: brightness(1.1);
+}
+
+/* Rodapé */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    z-index: 1000;
+}
+
+/* Animações */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    to {
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .menu-content, .settings-content, .statistics-content, .credits-content {
+        min-width: auto;
+        width: 95%;
+        padding: 2rem 1.5rem;
+    }
+    
+    .logo h1 {
+        font-size: 3rem;
+    }
+    
+    .start-message {
+        font-size: 1.2rem;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .game-info {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    #game-canvas {
+        width: 90vw;
+        height: 90vw;
+        max-width: 400px;
+        max-height: 400px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+    }
+    
+    .stat-value {
+        font-size: 2rem;
+    }
+    
+    .difficulty-buttons, .theme-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+    
+    .tech-tags {
+        gap: 0.3rem;
+    }
+    
+    .tech-tag {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo h1 {
+        font-size: 2.5rem;
+    }
+    
+    .menu-content, .game-over-content, .pause-content {
+        min-width: auto;
+        width: 95%;
+        padding: 1.5rem;
+    }
+    
+    .game-header {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+    
+    .game-container {
+        padding-top: 20px;
+    }
+    
+    #game-canvas {
+        width: 95vw;
+        height: 95vw;
+        max-width: 350px;
+        max-height: 350px;
+    }
+    
+    .footer {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+    }
+}
+
+/* Padrões Visuais para Acessibilidade */
+[data-visual-patterns="true"] .snake-segment {
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.3) 2px,
+        rgba(255, 255, 255, 0.3) 4px
+    );
+}
+
+[data-visual-patterns="true"] .food {
+    background-image: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.5) 30%,
+        transparent 30%
+    );
+}

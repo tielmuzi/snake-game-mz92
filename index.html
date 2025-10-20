@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game - O clássico do jogo Nokia</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="website icon" type="png"
+    href="images/snake.png">
+</head>
+<body>
+    <!-- Tela de Boas-Vindas -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-content">
+            <div class="logo">
+                <h1>🐍 SNAKE GAME</h1>
+                <div class="logo-subtitle">MZ92 Edition</div>
+            </div>
+            <p class="start-message">Pressione qualquer tecla para começar</p>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Principal -->
+    <div id="main-menu" class="screen">
+        <div class="menu-content">
+            <div class="menu-header">
+                <h2>🐍 SNAKE GAME</h2>
+            </div>
+            <nav class="menu-nav">
+                <button class="menu-btn" data-action="start-game">
+                    <span class="btn-icon">🎮</span>
+                    Iniciar Jogo
+                </button>
+                <button class="menu-btn" data-action="settings">
+                    <span class="btn-icon">⚙️</span>
+                    Configurações
+                </button>
+                <button class="menu-btn" data-action="statistics">
+                    <span class="btn-icon">📊</span>
+                    Estatísticas
+                </button>
+                <button class="menu-btn" data-action="credits">
+                    <span class="btn-icon">👨‍💻</span>
+                    Créditos
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Tela de Configurações -->
+    <div id="settings-screen" class="screen">
+        <div class="settings-content">
+            <div class="settings-header">
+                <button class="back-btn" data-action="back-to-menu">← Voltar</button>
+                <h2>Configurações</h2>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Dificuldade</h3>
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn" data-difficulty="easy">Fácil</button>
+                    <button class="difficulty-btn active" data-difficulty="normal">Normal</button>
+                    <button class="difficulty-btn" data-difficulty="hard">Difícil</button>
+                    <button class="difficulty-btn" data-difficulty="extreme">Extremo</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>Tema</h3>
+                <div class="theme-buttons">
+                    <button class="theme-btn active" data-theme="light">Modo Claro</button>
+                    <button class="theme-btn" data-theme="dark">Modo Escuro</button>
+                    <button class="theme-btn" data-theme="neon">Modo Neon</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>Volume</h3>
+                <div class="volume-control">
+                    <input type="range" id="volume-slider" min="0" max="100" value="50">
+                    <span id="volume-value">50%</span>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>Acessibilidade</h3>
+                <div class="accessibility-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="high-contrast">
+                        <span class="checkmark"></span>
+                        Alto Contraste
+                    </label>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Estatísticas -->
+    <div id="statistics-screen" class="screen">
+        <div class="statistics-content">
+            <div class="statistics-header">
+                <button class="back-btn" data-action="back-to-menu">← Voltar</button>
+                <h2>Estatísticas</h2>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="max-score">0</div>
+                    <div class="stat-label">Pontuação Máxima</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🍎</div>
+                    <div class="stat-value" id="total-food">0</div>
+                    <div class="stat-label">Comidas Coletadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value" id="total-time">0m</div>
+                    <div class="stat-label">Tempo Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-value" id="games-played">0</div>
+                    <div class="stat-label">Jogos Jogados</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Créditos -->
+    <div id="credits-screen" class="screen">
+        <div class="credits-content">
+            <div class="credits-header">
+                <button class="back-btn" data-action="back-to-menu">← Voltar</button>
+                <h2>Créditos</h2>
+            </div>
+            
+            <div class="credits-info">
+                <div class="developer-card">
+                    <div class="developer-avatar">👨‍💻</div>
+                    <h3>Salatiel Muzi</h3>
+                    <p class="developer-role">Desenvolvedor Principal</p>
+                    <p class="developer-description">
+                        Desenvolvedor apaixonado por criar experiências interativas e jogos web modernos.
+                        Este Snake Game foi desenvolvido com HTML5, CSS3 e JavaScript puro.
+                    </p>
+                </div>
+                
+                <div class="tech-stack">
+                    <h4>Tecnologias Utilizadas:</h4>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Canvas API</span>
+                        <span class="tech-tag">Web Audio API</span>
+                        <span class="tech-tag">LocalStorage</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela do Jogo -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="game-info">
+                <div class="score-display">
+                    <span class="label">Pontuação:</span>
+                    <span id="current-score">0</span>
+                </div>
+                <div class="level-display">
+                    <span class="label">Nível:</span>
+                    <span id="current-level">1</span>
+                </div>
+                <div class="speed-display">
+                    <span class="label">Velocidade:</span>
+                    <span id="current-speed">1x</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                
+                <button id="menu-btn" class="control-btn" data-action="back-to-menu">🏠</button>
+            </div>
+        </div>
+        
+        <div class="game-container">
+            <canvas id="game-canvas" width="600" height="600"></canvas>
+            <div id="game-instructions" class="instructions">
+                <p>Use W, A, S, D ou as setas direcionais para mover</p>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Game Over -->
+    <div id="game-over-screen" class="screen">
+        <div class="game-over-content">
+            <div class="game-over-header">
+                <h2>💀 GAME OVER</h2>
+            </div>
+            
+            <div class="final-stats">
+                <div class="final-score">
+                    <span class="label">Pontuação Final:</span>
+                    <span id="final-score">0</span>
+                </div>
+                <div class="final-level">
+                    <span class="label">Nível Alcançado:</span>
+                    <span id="final-level">1</span>
+                </div>
+                <div class="final-food">
+                    <span class="label">Comidas Coletadas:</span>
+                    <span id="final-food">0</span>
+                </div>
+            </div>
+            
+            <div class="game-over-buttons">
+                <button class="game-over-btn primary" data-action="restart-game">
+                    🔄 Jogar Novamente
+                </button>
+                <button class="game-over-btn secondary" data-action="back-to-menu">
+                    🏠 Menu Principal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Pausa -->
+    <div id="pause-screen" class="screen overlay">
+        <div class="pause-content">
+            <h2>⏸️ PAUSADO</h2>
+            <div class="pause-buttons">
+                <button class="pause-btn primary" data-action="resume-game">
+                    ▶️ Continuar
+                </button>
+                <button class="pause-btn secondary" data-action="back-to-menu">
+                    🏠 Menu Principal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <p>© 2025 MZ92. Todos os direitos reservados. Desenvolvido por Salatiel Muzi.</p>
+    </footer>
+
+    <!-- Áudio Elements -->
+    <audio id="menu-music" loop>
+        <source src="sounds/menu/menu-music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="background-music" loop></audio>
+    
+    <audio id="eat-sound">
+        <source src="sounds/effects/comer.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="dead-sound">
+        <source src="sounds/effects/dead.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="start-sound">
+        <source src="sounds/effects/start.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="pause-sound">
+        <source src="sounds/effects/pause.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="continue-sound">
+        <source src="sounds/effects/continuar.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="level-sound">
+        <source src="sounds/effects/nivel.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
