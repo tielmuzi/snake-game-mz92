@@ -67,9 +67,37 @@ class SnakeGame {
         this.applyTheme();
         this.updateStatsDisplay();
         this.startMenuMusic();
+        this.resizeCanvas(); // Redimensionar canvas inicialmente
         
         // Mostrar tela de boas-vindas
         this.showScreen('welcome-screen');
+    }
+    
+    // Função para redimensionar o canvas dinamicamente
+    resizeCanvas() {
+        const container = document.querySelector('.game-container');
+        if (!container) return;
+        
+        const containerRect = container.getBoundingClientRect();
+        const maxSize = Math.min(containerRect.width * 0.9, containerRect.height * 0.8);
+        
+        // Garantir que o tamanho seja múltiplo do gridSize para evitar problemas de renderização
+        const gridAlignedSize = Math.floor(maxSize / this.gridSize) * this.gridSize;
+        const finalSize = Math.max(gridAlignedSize, 200); // Tamanho mínimo de 200px
+        
+        // Aplicar o novo tamanho
+        this.canvas.width = finalSize;
+        this.canvas.height = finalSize;
+        this.canvas.style.width = finalSize + 'px';
+        this.canvas.style.height = finalSize + 'px';
+        
+        // Recalcular tileCount
+        this.tileCount = this.canvas.width / this.gridSize;
+        
+        // Se o jogo estiver rodando, redesenhar
+        if (this.gameState === 'game') {
+            this.drawGame();
+        }
     }
     
     // Gerenciamento de Telas
@@ -172,6 +200,28 @@ class SnakeGame {
             this.applyAccessibility();
             this.saveSettings();
         });
+        
+        // Event listeners para responsividade
+        window.addEventListener('resize', () => {
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(() => {
+                this.resizeCanvas();
+            }, 100); // Debounce para evitar muitas chamadas
+        });
+        
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.resizeCanvas();
+            }, 100); // Pequeno delay para aguardar a mudança de orientação
+        });
+        
+        // Listener para mudanças de fullscreen
+        document.addEventListener('fullscreenchange', () => {
+            setTimeout(() => {
+                this.resizeCanvas();
+                this.updateFullscreenButton(!!document.fullscreenElement);
+            }, 100);
+        });
     }
     
     handleAction(action) {
@@ -196,6 +246,9 @@ class SnakeGame {
                 break;
             case 'resume-game':
                 this.resumeGame();
+                break;
+            case 'toggle-fullscreen':
+                this.toggleFullscreen();
                 break;
         }
     }
@@ -422,6 +475,39 @@ class SnakeGame {
             this.playSound('continueSound');
             this.resumeBackgroundMusic();
             this.gameLoop = setInterval(() => this.update(), this.gameSpeed);
+        }
+    }
+    
+    toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            // Entrar em fullscreen
+            document.documentElement.requestFullscreen().then(() => {
+                // Aguardar um momento para a transição de fullscreen
+                setTimeout(() => {
+                    this.resizeCanvas();
+                    this.updateFullscreenButton(true);
+                }, 100);
+            }).catch(err => {
+                console.log('Erro ao entrar em fullscreen:', err);
+            });
+        } else {
+            // Sair do fullscreen
+            document.exitFullscreen().then(() => {
+                setTimeout(() => {
+                    this.resizeCanvas();
+                    this.updateFullscreenButton(false);
+                }, 100);
+            }).catch(err => {
+                console.log('Erro ao sair do fullscreen:', err);
+            });
+        }
+    }
+    
+    updateFullscreenButton(isFullscreen) {
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        if (fullscreenBtn) {
+            fullscreenBtn.textContent = isFullscreen ? '◱' : '⛶';
+            fullscreenBtn.title = isFullscreen ? 'Sair do modo tela cheia' : 'Entrar em modo tela cheia';
         }
     }
     
@@ -682,51 +768,142 @@ document.addEventListener('touchend', function(event) {
     lastTouchEnd = now;
 }, false);
 
-// Controles touch para mobile
+// Controles touch aprimorados para mobile
 let touchStartX = 0;
 let touchStartY = 0;
+let touchStartTime = 0;
+let swipeIndicator = null;
+
+// Criar indicador visual de swipe
+function createSwipeIndicator() {
+    if (!swipeIndicator) {
+        swipeIndicator = document.createElement('div');
+        swipeIndicator.className = 'swipe-indicator';
+        swipeIndicator.style.cssText = `
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            background: rgba(102, 126, 234, 0.8);
+            border-radius: 50%;
+            display: none;
+            z-index: 1000;
+            pointer-events: none;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease;
+        `;
+        document.body.appendChild(swipeIndicator);
+    }
+}
+
+function showSwipeIndicator(x, y, direction) {
+    createSwipeIndicator();
+    const arrows = { up: '↑', down: '↓', left: '←', right: '→' };
+    
+    swipeIndicator.textContent = arrows[direction] || '?';
+    swipeIndicator.style.left = x + 'px';
+    swipeIndicator.style.top = y + 'px';
+    swipeIndicator.style.display = 'flex';
+    swipeIndicator.style.transform = 'translate(-50%, -50%) scale(1.2)';
+    
+    setTimeout(() => {
+        if (swipeIndicator) {
+            swipeIndicator.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            swipeIndicator.style.opacity = '0';
+        }
+    }, 100);
+    
+    setTimeout(() => {
+        if (swipeIndicator) {
+            swipeIndicator.style.display = 'none';
+            swipeIndicator.style.opacity = '1';
+            swipeIndicator.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+    }, 300);
+}
 
 document.addEventListener('touchstart', (e) => {
+    if (!window.snakeGame || window.snakeGame.gameState !== 'game') return;
+    
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
-});
+    touchStartTime = Date.now();
+    e.preventDefault(); // Previne comportamentos padrão
+}, { passive: false });
 
 document.addEventListener('touchend', (e) => {
     if (!window.snakeGame || window.snakeGame.gameState !== 'game') return;
     
     const touchEndX = e.changedTouches[0].clientX;
     const touchEndY = e.changedTouches[0].clientY;
+    const touchEndTime = Date.now();
     
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
+    const deltaTime = touchEndTime - touchStartTime;
     
-    const minSwipeDistance = 50;
+    // Swipe mais responsivo - distância mínima reduzida e tempo máximo
+    const minSwipeDistance = 20;
+    const maxSwipeTime = 500;
+    
+    // Verifica se o movimento é válido
+    if (Math.abs(deltaX) < minSwipeDistance && Math.abs(deltaY) < minSwipeDistance) {
+        return;
+    }
+    
+    if (deltaTime > maxSwipeTime) {
+        return; // Movimento muito lento
+    }
+    
+    let direction = null;
+    let moved = false;
     
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
         // Movimento horizontal
-        if (Math.abs(deltaX) > minSwipeDistance) {
-            if (deltaX > 0 && window.snakeGame.dx === 0) {
-                // Swipe direita
-                window.snakeGame.dx = 1;
-                window.snakeGame.dy = 0;
-            } else if (deltaX < 0 && window.snakeGame.dx === 0) {
-                // Swipe esquerda
-                window.snakeGame.dx = -1;
-                window.snakeGame.dy = 0;
-            }
+        if (deltaX > 0 && window.snakeGame.dx !== -1) {
+            // Swipe direita
+            window.snakeGame.dx = 1;
+            window.snakeGame.dy = 0;
+            direction = 'right';
+            moved = true;
+        } else if (deltaX < 0 && window.snakeGame.dx !== 1) {
+            // Swipe esquerda
+            window.snakeGame.dx = -1;
+            window.snakeGame.dy = 0;
+            direction = 'left';
+            moved = true;
         }
     } else {
         // Movimento vertical
-        if (Math.abs(deltaY) > minSwipeDistance) {
-            if (deltaY > 0 && window.snakeGame.dy === 0) {
-                // Swipe baixo
-                window.snakeGame.dx = 0;
-                window.snakeGame.dy = 1;
-            } else if (deltaY < 0 && window.snakeGame.dy === 0) {
-                // Swipe cima
-                window.snakeGame.dx = 0;
-                window.snakeGame.dy = -1;
-            }
+        if (deltaY > 0 && window.snakeGame.dy !== -1) {
+            // Swipe baixo
+            window.snakeGame.dx = 0;
+            window.snakeGame.dy = 1;
+            direction = 'down';
+            moved = true;
+        } else if (deltaY < 0 && window.snakeGame.dy !== 1) {
+            // Swipe cima
+            window.snakeGame.dx = 0;
+            window.snakeGame.dy = -1;
+            direction = 'up';
+            moved = true;
         }
     }
-});
+    
+    // Mostrar feedback visual se o movimento foi aceito
+    if (moved && direction) {
+        showSwipeIndicator(touchEndX, touchEndY, direction);
+        
+        // Adicionar pequena vibração se disponível
+        if (navigator.vibrate) {
+            navigator.vibrate(25);
+        }
+    }
+    
+    e.preventDefault();
+}, { passive: false });

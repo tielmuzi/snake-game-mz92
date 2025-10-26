@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover, user-scalable=no, shrink-to-fit=no">
     <title>Snake Game - O clássico do jogo Nokia</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="website icon" type="png"
@@ -186,7 +186,7 @@
                 </div>
             </div>
             <div class="game-controls">
-                
+                <button id="fullscreen-btn" class="control-btn" data-action="toggle-fullscreen">⛶</button>
                 <button id="menu-btn" class="control-btn" data-action="back-to-menu">🏠</button>
             </div>
         </div>
@@ -195,7 +195,7 @@
             <canvas id="game-canvas" width="600" height="600"></canvas>
             <div id="game-instructions" class="instructions">
                 <p>Use W, A, S, D ou as setas direcionais para mover</p>
-                
+                <p class="mobile-instructions">No mobile: deslize o dedo na tela para mover</p>
             </div>
         </div>
     </div>
